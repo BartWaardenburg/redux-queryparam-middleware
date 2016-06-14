@@ -75,5 +75,9 @@
     "eslint-plugin-flowtype": "^2.2.7",
     "flow-bin": "^0.27.0",
     "nyc": "^6.4.4"
+  },
+  "dependencies": {
+    "lodash.isobject": "^3.0.2",
+    "query-string": "^4.2.2"
   }
 }
