@@ -10,7 +10,8 @@
     "flow": "flow check",
     "test": "ava",
     "test:watch": "ava --watch",
-    "coverage": "nyc ava"
+    "coverage": "nyc ava",
+    "docs": "documentation readme ./src/index.js --section 'Reference'"
   },
   "repository": {
     "type": "git",
@@ -77,6 +78,7 @@
     "nyc": "^6.4.4"
   },
   "dependencies": {
+    "documentation": "^4.0.0-beta5",
     "lodash.isobject": "^3.0.2",
     "query-string": "^4.2.2"
   }
