@@ -9,8 +9,12 @@ let queryparamMiddlewareTransformer: Object;
 
 /**
  * This middleware for redux will store a slice of the redux state in queryparams
- * @param  name The identifier to be used to retreive state from session storage
- * @return      The final result when all reducers have been run
+ * @param  settings             Object containing all configuration for the queryparam middleware
+ * @param  settings.types       A collection of action types to listen to
+ * @param  settings.include     Properties of the payload objects of the types to store in the url
+ * @param  settings.omit        A collection of properties to remove from the url when an action runs
+ * @param  settings.transformer An object containing methods to transform certain payload values
+ * @return                      The final result when all reducers have been run
  */
 export const createQueryparamMiddleware = ({types = [], include = [], omit = [], transformer = {}}: {types: Array<string>, include?: Array<string>, omit?: Array<string>, transformer?: {}}) =>
   () => (next: Function) => (action: Object) => {

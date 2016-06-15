@@ -87,14 +87,22 @@ Only using the middleware to store the state tree is not that usefull. That's wh
 
 ## Reference
 
+### queryparamMiddlewareTransformer
+
+This is used to transform the request to the right right queryparams
+
 ### createQueryparamMiddleware
 
 This middleware for redux will store a slice of the redux state in queryparams
 
 **Parameters**
 
--   `name`  The identifier to be used to retreive state from session storage
--   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**
+-   `settings`  Object containing all configuration for the queryparam middleware
+    -   `settings.types`  A collection of action types to listen to
+    -   `settings.include`  Properties of the payload objects of the types to store in the url
+    -   `settings.omit`  A collection of properties to remove from the url when an action runs
+    -   `settings.transformer`  An object containing methods to transform certain payload values
+-   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
     -   `$0.types`   (optional, default `[]`)
     -   `$0.include`   (optional, default `[]`)
     -   `$0.omit`   (optional, default `[]`)
@@ -108,8 +116,12 @@ This will get the current state information from the queryparams
 
 **Parameters**
 
--   `keys`  The keys to read from the url
--   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**
+-   `settings`  An object containing the settings to retreive the state from the queryparams
+    -   `settings.keys`  The keys to read from the url
+    -   `settings.transformer`  An object containing methods to transform certain querparam values
+    -   `settings.reducer`  The reducer to update in the store
+    -   `settings.state`  The initial state to modify
+-   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
     -   `$0.keys`   (optional, default `[]`)
     -   `$0.transformer`   (optional, default `{}`)
     -   `$0.reducer`  
