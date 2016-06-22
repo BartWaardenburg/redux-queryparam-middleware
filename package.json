@@ -1,6 +1,6 @@
 {
   "name": "redux-queryparam-middleware",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Simple redux middleware which will store (part of) the payload of specified actions in the url and is able to retrieve an initial state from the url",
   "main": "lib/index.js",
   "scripts": {
