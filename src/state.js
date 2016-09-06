@@ -11,24 +11,28 @@ import {parse} from 'query-string';
  * @return                      An object containing the needed information in the right format
  */
 export const getQueryparamState = ({keys = [], transformer = {}, reducer, state}: {keys: Array<string>, transformer: {}, reducer: string, state: {}}) => {
-  const params = parse(location.search);
-  transformer = keys.reduce((transformer, key) => Object.keys(transformer).includes(key) ? transformer : ({
-    ...transformer,
-    [key]: (value) => value,
-  }), transformer);
+	const stateSlice = getQueryparamData({keys, transformer});
 
-  const stateSlice = Object.keys(params)
-    .filter((key) => keys.includes(key))
-    .reduce((state, key) => ({
-      ...state,
-      [key]: transformer[key](params[key]),
-    }), {});
+	return {
+		...state,
+		[reducer]: {
+			...state[reducer],
+			...stateSlice,
+		},
+	};
+};
 
-  return {
-    ...state,
-    [reducer]: {
-      ...state[reducer],
-      ...stateSlice,
-    },
-  };
+export const getQueryparamData = ({keys = [], transformer = {}}: {keys: Array<string>, transformer: {}}) => {
+	const params = parse(location.search);
+	transformer = keys.reduce((transformer, key) => Object.keys(transformer).includes(key) ? transformer : ({
+		...transformer,
+		[key]: (value) => value,
+	}), transformer);
+
+	return Object.keys(params)
+		.filter((key) => keys.includes(key))
+		.reduce((state, key) => ({
+			...state,
+			[key]: transformer[key](params[key]),
+		}), {});
 };

@@ -1,10 +1,11 @@
 /* @flow */
 
 export {
-  default,
-  createQueryparamMiddleware,
+	default,
+	createQueryparamMiddleware,
 } from './middleware';
 
 export {
-  getQueryparamState,
+	getQueryparamState,
+	getQueryparamData,
 } from './state';

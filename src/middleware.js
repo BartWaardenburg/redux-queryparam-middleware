@@ -17,44 +17,44 @@ let queryparamMiddlewareTransformer: Object;
  * @return                      The final result when all reducers have been run
  */
 export const createQueryparamMiddleware = ({types = [], include = [], omit = [], transformer = {}}: {types: Array<string>, include?: Array<string>, omit?: Array<string>, transformer?: {}}) =>
-  () => (next: Function) => (action: Object) => {
-    if (types.includes(action.type)) {
-      const params: Object = parse(location.search);
+	() => (next: Function) => (action: Object) => {
+		if (types.includes(action.type)) {
+			const params: Object = parse(location.search);
 
-      if (!include.length) include = Object.keys(action.payload);
+			if (!include.length) include = Object.keys(action.payload);
 
-      // Build up the transformer to modify any values
-      if (!queryparamMiddlewareTransformer) {
-        queryparamMiddlewareTransformer = include.reduce((transformer, key) => Object.keys(transformer).includes(key) ? transformer : ({
-          ...transformer,
-          [key]: (value) => value,
-        }), transformer);
-      }
+			// Build up the transformer to modify any values
+			if (!queryparamMiddlewareTransformer) {
+				queryparamMiddlewareTransformer = include.reduce((transformer, key) => Object.keys(transformer).includes(key) ? transformer : ({
+					...transformer,
+					[key]: (value) => value,
+				}), transformer);
+			}
 
-      // Add the params we want to store
-      let nextParams = include.reduce((params, key) => ({
-        ...params,
-        [key]: queryparamMiddlewareTransformer[key](action.payload[key]),
-      }), params);
+			// Add the params we want to store
+			let nextParams = include.reduce((params, key) => ({
+				...params,
+				[key]: queryparamMiddlewareTransformer[key](action.payload[key]),
+			}), params);
 
-      // Flatten any objects
-      Object.keys(nextParams).forEach((key) => {
-        if (isObject(nextParams[key])) {
-          nextParams = {
-            ...nextParams,
-            ...nextParams[key],
-          };
-          delete nextParams[key];
-        }
-      });
+			// Flatten any objects
+			Object.keys(nextParams).forEach((key) => {
+				if (isObject(nextParams[key])) {
+					nextParams = {
+						...nextParams,
+						...nextParams[key],
+					};
+					delete nextParams[key];
+				}
+			});
 
-      // Remove keys which we don't want to keep
-      omit.forEach((key) => delete nextParams[key]);
+			// Remove keys which we don't want to keep
+			omit.forEach((key) => delete nextParams[key]);
 
-      history.replaceState(null, '', `${location.pathname}?${stringify(nextParams)}`);
-    }
+			history.replaceState(null, '', `${location.pathname}?${stringify(nextParams)}`);
+		}
 
-    return next(action);
-  };
+		return next(action);
+	};
 
 export default createQueryparamMiddleware;
