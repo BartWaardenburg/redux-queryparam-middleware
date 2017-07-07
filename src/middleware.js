@@ -21,7 +21,7 @@ export const createQueryparamMiddleware = ({types = [], include = [], omit = [],
 		if (types.includes(action.type)) {
 			const params: Object = parse(location.search);
 
-			if (!include.length) include = Object.keys(action.payload);
+			if (!include.length) include = Object.keys(action);
 
 			// Build up the transformer to modify any values
 			if (!queryparamMiddlewareTransformer) {
@@ -34,7 +34,7 @@ export const createQueryparamMiddleware = ({types = [], include = [], omit = [],
 			// Add the params we want to store
 			let nextParams = include.reduce((params, key) => ({
 				...params,
-				[key]: queryparamMiddlewareTransformer[key](action.payload[key]),
+				[key]: queryparamMiddlewareTransformer[key](action[key]),
 			}), params);
 
 			// Flatten any objects
