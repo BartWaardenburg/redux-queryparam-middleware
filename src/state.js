@@ -23,7 +23,7 @@ export const getQueryparamState = ({keys = [], transformer = {}, reducer, state}
 };
 
 export const getQueryparamData = ({keys = [], transformer = {}}: {keys: Array<string>, transformer: {}}) => {
-	const params = parse(location.search);
+	const params = parse(window.location.search);
 	transformer = keys.reduce((transformer, key) => Object.keys(transformer).includes(key) ? transformer : ({
 		...transformer,
 		[key]: (value) => value,

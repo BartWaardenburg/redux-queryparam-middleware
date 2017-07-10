@@ -19,7 +19,7 @@ let queryparamMiddlewareTransformer: Object;
 export const createQueryparamMiddleware = ({types = [], include = [], omit = [], transformer = {}}: {types: Array<string>, include?: Array<string>, omit?: Array<string>, transformer?: {}}) =>
 	() => (next: Function) => (action: Object) => {
 		if (types.includes(action.type)) {
-			const params: Object = parse(location.search);
+			const params: Object = parse(window.location.search);
 
 			if (!include.length) include = Object.keys(action.payload);
 
@@ -51,7 +51,7 @@ export const createQueryparamMiddleware = ({types = [], include = [], omit = [],
 			// Remove keys which we don't want to keep
 			omit.forEach((key) => delete nextParams[key]);
 
-			history.replaceState(null, '', `${location.pathname}?${stringify(nextParams)}`);
+			window.history.replaceState(null, '', `${window.location.pathname}?${stringify(nextParams)}`);
 		}
 
 		return next(action);

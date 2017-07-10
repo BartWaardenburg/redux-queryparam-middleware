@@ -4,13 +4,12 @@
   "description": "Simple redux middleware which will store (part of) the payload of specified actions in the url and is able to retrieve an initial state from the url",
   "main": "lib/index.js",
   "scripts": {
-    "prepublish": "npm run lint && npm run flow && npm run build",
+    "prepare": "npm run lint && npm run flow && npm run build",
     "build": "babel ./src -d ./lib --ignore '.spec'",
     "lint": "eslint src/**/*.js",
     "flow": "flow check",
-    "test": "ava",
-    "test:watch": "ava --watch",
-    "coverage": "nyc ava",
+    "test": "jest",
+    "test:watch": "npm run test -- --watch",
     "docs": "documentation readme ./src/index.js --section 'Reference'"
   },
   "repository": {
@@ -34,49 +33,19 @@
     "url": "https://github.com/BartWaardenburg/redux-queryparam-middleware/issues"
   },
   "homepage": "https://github.com/BartWaardenburg/redux-queryparam-middleware#readme",
-  "ava": {
-    "files": [
-      "src/**/*.spec.js"
-    ],
-    "source": [
-      "src/**/*.js"
-    ],
-    "failFast": true,
-    "require": [
-      "babel-register"
-    ],
-    "babel": "inherit"
-  },
-  "nyc": {
-    "reporter": "lcov",
-    "require": [
-      "babel-register"
-    ],
-    "all": true,
-    "cache": true,
-    "exclude": [
-      "lib"
-    ],
-    "include": [
-      "src/**/*.js"
-    ]
-  },
   "devDependencies": {
-    "ava": "^0.15.2",
-    "babel": "^6.5.2",
     "babel-cli": "^6.10.1",
-    "babel-eslint": "^6.0.4",
+    "babel-eslint": "^7.2.3",
     "babel-plugin-array-includes": "^2.0.3",
     "babel-plugin-transform-flow-strip-types": "^6.8.0",
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
-    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-env": "^1.6.0",
     "babel-register": "^6.9.0",
     "documentation": "^4.0.0-beta5",
-    "eslint": "^2.12.0",
-    "eslint-plugin-flow-vars": "^0.4.0",
+    "eslint": "^4.2.0",
     "eslint-plugin-flowtype": "^2.2.7",
-    "flow-bin": "^0.27.0",
-    "nyc": "^6.4.4"
+    "eslint-plugin-jest": "^20.0.3",
+    "flow-bin": "^0.49.1"
   },
   "dependencies": {
     "lodash.isobject": "^3.0.2",
