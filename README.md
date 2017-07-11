@@ -121,4 +121,16 @@ This will get the current state information from the queryparams
     -   `settings.reducer`  The reducer to update in the store
     -   `settings.state`  The initial state to modify
 
-Returns **any** An object containing the needed information in the right format
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** An object containing the needed information in the right format
+
+### getQueryparamData
+
+This will get an object containing the data contained in the queryparams
+
+**Parameters**
+
+-   `settings` **any** An object containing the settings to retreive the state from the queryparams
+    -   `settings.keys`  The keys to read from the url
+    -   `settings.transformer`  An object containing methods to transform certain querparam values
+
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** An object containing the needed information in the right format

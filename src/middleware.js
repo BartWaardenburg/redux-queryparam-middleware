@@ -16,7 +16,17 @@ let queryparamMiddlewareTransformer: Object;
  * @param  settings.transformer An object containing methods to transform certain payload values
  * @return                      The final result when all reducers have been run
  */
-export const createQueryparamMiddleware = ({types = [], include = [], omit = [], transformer = {}}: {types: Array<string>, include?: Array<string>, omit?: Array<string>, transformer?: {}}) =>
+export const createQueryparamMiddleware = ({
+	types = [],
+	include = [],
+	omit = [],
+	transformer = {},
+}: {
+	types: Array<string>,
+	include?: Array<string>,
+	omit?: Array<string>,
+	transformer?: {},
+}) =>
 	() => (next: Function) => (action: Object) => {
 		if (types.includes(action.type)) {
 			const params: Object = parse(window.location.search);
