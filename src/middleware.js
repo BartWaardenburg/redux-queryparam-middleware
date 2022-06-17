@@ -16,10 +16,22 @@ let queryparamMiddlewareTransformer: Object;
  * @param  settings.transformer An object containing methods to transform certain payload values
  * @return                      The final result when all reducers have been run
  */
+
+const parseLocation = () => location.hash && /\?/.test(location.hash) ? {
+	prefix: `${location.pathname}${location.hash.split('?')[0]}`,
+	search: location.hash.split('?')[1],
+	suffix: '',
+} : {
+	prefix: location.pathname,
+	search: location.search,
+	suffix: location.hash,
+};
+
 export const createQueryparamMiddleware = ({types = [], include = [], omit = [], transformer = {}}: {types: Array<string>, include?: Array<string>, omit?: Array<string>, transformer?: {}}) =>
 	() => (next: Function) => (action: Object) => {
 		if (types.includes(action.type)) {
-			const params: Object = parse(location.search);
+			const { prefix, suffix, search } = parseLocation();
+			const params: Object = parse(search);
 
 			if (!include.length) include = Object.keys(action);
 
@@ -51,7 +63,7 @@ export const createQueryparamMiddleware = ({types = [], include = [], omit = [],
 			// Remove keys which we don't want to keep
 			omit.forEach((key) => delete nextParams[key]);
 
-			history.replaceState(null, '', `${location.pathname}?${stringify(nextParams)}`);
+			history.replaceState(null, '', `${prefix}?${stringify(nextParams)}${suffix}`);
 		}
 
 		return next(action);
